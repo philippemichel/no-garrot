@@ -1,0 +1,99 @@
+---
+title: "COVAMBU"
+subtitle: "Plan d'analyse statistique"
+author: "Philippe MICHEL"
+date: today
+date-format: "DD MMMM YYYY"
+format: 
+  pdf:
+    code-link: true
+    pdf-engine: lualatex
+keep-tex: true
+number-sections: false
+toc: false
+lof: false
+lot: false
+mainfont: Faune
+mainfontoptions:
+  - Numbers=OldStyle
+  - Ligatures=TeX
+sansfont: Myriad Pro
+sansfontoptions:
+  - Ligatures=TeX
+mathfontoptions: 
+  - Numbers=Proportional
+fig-cap-location: bottom
+tbl-cap-location: top
+class: scrartcl
+classoption: [french]
+papersize: a4paper
+editor: source
+#cite-method: biblatex
+bibliography: stat.bib
+license: "CC BY-SA"
+---
+
+```{r setup, include= FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = FALSE,
+# knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+#
+ fig.width = 7,
+ fig.asp = 0.8,
+ out.width = "100%"
+)
+```
+
+```{r info}
+rm(list=ls())
+library("baseph")
+library("tidyverse")
+library("kableExtra")
+# sessionInfo()
+```
+
+Ce document ne concerne que l'analyse statistique des données.
+
+Sauf indication contraire le risque $\alpha$ retenu sera de 0,05 & la puissance de 0,8.
+
+
+
+## Description de la population
+
+
+Les  données  quantitatives  seront  décrites  par  les  moyennes  et  médianes,  les  écarts-types  et  intervalles interquartiles. Les données nominales seront décrites par des pourcentages avec des intervalles de confiance bilatéraux à 95%. Les proportions de données manquantes seront calculées.
+
+Les caractéristiques des patients (critères d’éligibilité, démographie, données à l’inclusion) seront décrites et comparées par centre et décrites sans comparaison par bras de traitement.
+
+Les  données  quantitatives  seront  comparées  à  l'aide  de  tests de  Student  ou  Anova  ou  de  tests  non paramétriques  (Wilcoxon  Mann-Withney, ANOVA)  lorsque  la  distribution  reste  asymétrique  même après transformation appropriée (échelle des puissances de Tukey). Des tests appariés seront utilisés lors de la  comparaison  des  mesures  répétées  des  mêmes  patients.  Les  données  qualitatives  seront  comparées  au moyen  de  tests  du  Chi-2  ou  de  tests  exacts  de  Fisher  lorsque  les  groupes  sont  indépendants  et  de  tests  de Mcnemar lorsque les groupes sont appariés (mesures répétées).
+
+## Analyse principale
+
+Compte tenu du caractère non continu du critère principal - échelle numérique allant de 0 à 10 - les valeurs de douleur observées lors de la procédure initiale seront comparées entre les groupes de prélèvement par un test non paramétrique de comparaison de moyennes (Wilcoxon) en tenant compte du critère de stratification, selon  les  recommandations  de  l’EMEA [@emea],  au  risque  $\alpha$  2,5%  bilatéral  pour  chacune  des  comparaisons principales: abstention vs garrot tissu et abstention vs garrot caoutchouc. 
+
+L’analyse principale sera réalisée sur la population en intention de traiter avec un jeu de données complet, c’est à dire sans refus ou non-réalisation  de  la  procédure,  post inclusion; par  contre  les  procédures  réalisées,  bien  que  ne  correspondant  pas  à  la  randomisation  seront analysées dans leur groupe de randomisation.
+
+Les  cas  de  refus  ou  de  non-réalisation  de  la  procédure  initiale  seront  crédités  de  la  douleur  maximale constatée globalement, dans le cadre d’une analyse de robustesse. En complément, une analyse per-protocole (procédure  initiale  réalisée  et  correspondant  à  la  randomisation)  sera  réalisée et  considérée  comme secondaire. 
+
+Par ailleurs, la taille de l’effet sera estimée.
+
+## Analyses secondaires
+
+L'analyse  comparative  de  l'effet  des  modalités  de  prélèvement  sur  les  critères  secondaires  quantitatifs  ou qualitatifs : nombre de tentatives, fréquence des hématomes, durée de la procédure, sera réalisée à l'aide de tests non paramétriques à l’instar du critère principal (stratification), adaptés à la nature quantitative/ordinale (Wilcoxon) ou qualitative (Fisher) de la réponse.
+
+Secondairement, des modèles de régression GLM dont la fonction de lien et la distribution des erreurs seront choisies en fonction de la nature de la réponse d’intérêt (critère principal et critères secondaires) : logit et binomiale si la réponse est binaire (présence d’hématome), logit cumulatif et multinomial si la réponse est ordinale (facilité de la procédure), log et Poisson si la réponse est un dénombrement (nombre d’hématomes), identité et gaussien si la réponse peut être considérée comme continue (durée de la procédure, douleur). Ces modèles  de  régression  permettront  d’explorer  les  facteurs  associés  à  la  réponse (âge  et  sexe  du  patient, expérience  du  soignant,  apprentissage,  caractéristiques  du  matériel  de  ponction),  après  un  balayage  bivarié retenant comme candidats les facteurs ayant une association avec la réponse significative à p=0,2. La forme de la relation des facteurs continus sera explorée par des polynômes fractionnaires. La qualité de l'ajustement sera  vérifiée  (observations  influentes,  R2)  et  la  performance  des  modèles  sera  évaluée  par  le  critère d'information d'Akaike.
+
+Ces analyses seront effectuées sur les bras en intention de traiter.
+
+### Analyse des données de tolérance. 
+
+Pour chaque symptôme ou groupe de symptôme et pour le nombre total de patients, l’analyse portera sur le nombre et le pourcentage de patients (population utilisée pour la tolérance, c’est à dire tous les patients ayant bénéficié  d’une  procédure  de  prélèvement)  présentant  des  effets  indésirables  attendus  ou  inattendus.  La nature de chaque effet sera précisée. L’incidence des effets indésirables sera comparée entre les bras de traitement (abstention vs garrot) en utilisant des tests de Fischer. 
+
+L’analyse de la tolérance sera effectuée en fonction de la procédure de prélèvement réalisée (quelle que soit la randomisation) et sur la population en per-protocole.
+
+## Technique {.appendix}
+
+L'analyse statistique sera réalisée avec le logiciel **R** [@rstat] & divers packages en particulier `tidyverse` [@tidy], `FactoMineR` [@facto], `epiDisplay` [@epid]  & `baseph` [@baseph]. 
+
+Un dépôt GitHub© sera utilisé qui ne contiendra que le code & non les données ou résultats <https://github.com/philippemichel/covambu>.
+
+### Bibliographie

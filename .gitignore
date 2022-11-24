@@ -37,3 +37,10 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+*.pdf
+*.tex
+/data/
+/Doc/
+stat.bib
+COVAMBU.Rproj
